@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="big">
+        <img src="../../照片/新一.jpeg" alt="">
+        <input type="text" class="iip" id="input">
+        <button class="addd"> Submit</button>
+        <ul id="ul">
+            
+        </ul>
+        <p class="pp">数量 <span class="sl"></span></p>
+        <!-- <button class="qk">清空</button> -->
+    </div>
+</body>
+</html>
+<script>
+    var list=[]
+   
+    var ul=document.getElementById('ul')
+    var ipt=document.getElementById('input')
+    var addd=document.querySelector('.addd')
+    var sl=document.querySelector('.sl')
+    var check=document.querySelector('.check')
+
+//    var qk=document.querySelector('.qk')
+
+
+//对添加按钮点击事件
+    addd.addEventListener('click',function(){
+        // var 一个变量为0 每添加一次c就加一，就相当于有几个li
+        var c=0
+        //为空判断
+        if(ipt.value==''){
+            alert('不能为空')
+            return
+        }
+        // 将内容添加到数组里
+            list.push(ipt.value)
+            //获取li
+        var li=document.createElement('li')
+        //循环list数组
+        for(var i=0;i<list.length;i++){
+            //给li添加
+            li.innerHTML=`
+                <input type="checkbox" class="check">
+           <span>${list[i]}</span>
+           <button class="sc" cc="${c++}">删除</button>
+        `
+        // 清空输入框
+        ipt.value=''
+        // li添加到ul里
+        ul.appendChild(li)
+        //让总数等于c c就是总共的项目
+        sl.innerHTML=c
+        }
+    })
+
+//对input框键盘事件
+    ipt.addEventListener('keyup',function(e){
+        //var一个变量
+        var c=0
+        //如果内容为空
+        if(ipt.value==''){
+            //弹出提示框
+            alert('不能为空')
+            return
+        }
+        //如果拿的是enter键
+        if(e.keyCode==13){
+            //把输入的内容添加到list书阻力
+            list.push(ipt.value)
+            //在清空
+        ipt.value=''
+        //动态获取li
+        var li=document.createElement('li')
+        //循环便利list
+        for (let i = 0; i < list.length; i++) {
+            //li里添加数据
+           li.innerHTML=`
+           <input type="checkbox" >
+           <span>${list[i]}</span>
+           <button class="sc" cc="${c++}">删除</button>
+           `
+        }
+        //li添加到ul里
+        ul.appendChild(li)
+        sl.innerHTML=c
+        }
+        // 获取所有的删除按钮
+        var sc=document.querySelectorAll('.sc')
+        //循环删除按钮对每个按钮的点击事件
+        for(var i=0;i<sc.length;i++){
+            //点击当前点击的删除按钮
+        sc[i].onclick=function(){
+            // 删除this的这个父亲就是li   这个this就是当前的ipt
+           ul.removeChild(this.parentNode)
+        }
+    }
+    })
+   
+</script>
+<style>
+    .pp{
+        margin-left: 20px;
+    }
+    body{
+        width: 100%;
+        height: 100%;
+        background:-webkit-linear-gradient(left,pink,hotpink);
+    }
+    .big{
+        border-top-left-radius: 10%;
+        border-top-right-radius: 10%;
+        border-bottom-left-radius: 10%;
+        border-bottom-right-radius: 10%;
+        width: 350px;
+        height: 400px;
+        background-color: white;
+       position: absolute;
+       left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+    img{
+        width: 200px;
+        margin-left: 22%;
+        border-top-left-radius: 10%;
+        border-top-right-radius: 10%;
+        border-bottom-left-radius: 10%;
+        border-bottom-right-radius: 10%;
+    }
+    .iip{
+        width: 65%;
+        border: 0;
+      border-bottom: 3px dashed orangered;
+      margin-left: 7%;
+        height: 30px;
+    }
+    del{
+        border: 0;
+        padding: 10px 10px;
+        border: 1px solid #ccc;
+    }
+</style>
