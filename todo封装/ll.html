@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				text-decoration: none;
+				font-size: 18px;
+				list-style: none;
+			}
+
+			header h1 {
+				height: 80px;
+				background-color: red;
+				color: white;
+				line-height: 80px;
+				text-align: center;
+				font-size: 40px;
+			}
+			.active{
+				width: 600px;
+				margin: 0 auto;
+			}
+			.active>input {
+				width:100%;
+				height: 35px;
+				margin: 10px 0 20px 0;
+				text-indent: 1em;
+			}
+			.activemin span{
+				display: inline-block;
+				border: 1px solid lightgray;
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				margin-left: 20px;
+			}
+			.activemin span:first-of-type{
+				color: red;
+				border: none;
+			}
+			ul{
+				width: 600px;
+				margin: 0 auto;
+			}
+			ul li{
+				width: 100%;
+				margin-top: 30px;
+				border-bottom: 1px dashed lightgrey;
+			}
+			ul li a{
+				color: #000000;
+				float: right;
+			}
+			ul li span{
+				margin-left: 20px;
+			}
+			ul li input{
+				width: 20px;
+				height: 20px;
+				vertical-align: middle;
+			}
+			.del{
+				text-decoration: line-through;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+			<header>
+				<h1>TODO-LIST任务列表</h1>
+			</header>
+			<div class="active">
+				<input type="text" value="" placeholder="请输入任务，吃饭睡觉打豆豆" />
+				<div class="activemin">
+					<span>未完成：<span  class="first"></span></span>
+					<span>所有任务</span>
+					<span>已完成任务</span>
+					<span>未完成任务</span>
+				</div>
+			</div>
+			<ul class="taskList">
+				<!-- <li>
+					<input type="checkbox" name="" id="" value="" />
+					<span>学习</span>
+					<a href="javascript:void(0);">删除</a>
+				</li> -->
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+	//用户任务输入框
+		//获取输入框的input节点
+		var _taskInput=document.querySelector(".active>input");
+		//获取ul的节点
+		var _taskList=document.querySelector(".taskList");
+		var _first=document.querySelector(".first");//未完成
+		var _all=document.querySelector(".activemin span:nth-of-type(2)"); //所有任务
+		var _task=document.querySelector(".activemin span:nth-of-type(3)"); //已完成
+		var _untask=document.querySelector(".activemin span:nth-of-type(4)"); //未完成
+		//用来计算输入的任务
+		var nextId;
+		
+	//添加任务
+		function addTask(){
+			//taskStr就是本地存储localStorage.taskList的值
+			// 1.从localStorage本地存储获取字符串数据key：taskList
+			var taskStr=localStorage.taskList;
+			// 2.如果有就转成数组，没有就说明是第一次获取，定义一个新的空数组
+			// JSON.parse:将数据转换为json对象
+			var taskArr=taskStr==undefined?[]:JSON.parse(taskStr);
+			nextId=localStorage.nextId==undefined?-1:localStorage.nextId;
+			// 3.获取用户输入的任务并创建对象
+			var obj={
+				"nextId":++nextId,
+				"name":`${_taskInput.value}`,
+				"status":false		//true:已完成 false:未完成
+			}
+			//4.向数组追加
+			taskArr.push(obj); 
+			//5.重新把数组更新到localstorage,同时更新nextId
+			//JSON.stringify:把对象转换成字符串
+			localStorage.taskList=JSON.stringify(taskArr);
+			localStorage.nextId=nextId;
+			//6.重新渲染页面
+			showTaskList();
+		}
+		//渲染页面
+		showTaskList();
+		function showTaskList(){
+			// 每次添加之后再次添加渲染页面要清空
+			_taskList.innerHTML="";
+			// 1.从localstorage中读出数据
+			var taskStr=localStorage.taskList;
+			var taskArr=taskStr==undefined?[]:JSON.parse(taskStr);
+			//2.创建li节点
+			taskArr.forEach(function(obj){
+				// createElement:创建节点
+				var _li=document.createElement("li")
+				_li.innerHTML=`
+				<input type="checkbox" name="" id="" value="" />
+				<span>${obj.name}</span>
+				<a href="javascript:void(0);">删除</a>
+				`;
+			//3.向ul中追加li
+			// insertBefore：_li插入到_taskList子节点上面
+			_taskList.insertBefore(_li,_taskList.firstChild)
+			})
+			//4.重新渲染
+			showTask();
+		}
+		//回车调用
+		_taskInput.onkeydown=function(event){
+			if(event.keyCode==13){
+				addTask();
+			}
+		}
+		// 渲染数据
+		showTask();
+		function showTask(state){
+			_taskList.innerHTML="";
+			//1.从本地存储取数据
+			var taskStr = localStorage.taskList;
+			var taskArr = taskStr == undefined ? [] : JSON.parse(taskStr);
+			var total=taskArr.length;//总任务数
+			//筛选出未完成的任务
+			var noTask=taskArr.filter(function(obj){
+				return obj.status==false;
+			})
+			var noTaskNum=noTask.length;	//未完成的数量
+			_first.innerHTML=`${noTaskNum}/${total}`;	//更新任务数
+			//2.遍历追加节点
+			taskArr.forEach(function(obj,index){
+				var _li=document.createElement("li");
+				//渲染符合状态的数据
+				if(obj.status==state){
+					_li.innerHTML=`<input type="checkbox" ${obj.status==true?'checked':''} value="${obj.nextId}" />
+							<span class=${obj.status==true?'del':''}>${obj.name}</span>
+							<a href="javascript:void(0);">删除</a>`;
+					_taskList.insertBefore(_li,_taskList.firstElementChild);
+				}else if(state==undefined){
+					_li.innerHTML=`<input type="checkbox" ${obj.status==true?'checked':''} value="${obj.nextId}" />
+							<span class=${obj.status==true?'del':''}>${obj.name}</span>
+							<a href="javascript:void(0);">删除</a>`;
+					_taskList.insertBefore(_li,_taskList.firstElementChild);
+				}
+			})
+		}
+		var flag;	//识别当前选的是哪一个任务
+		//点击所有任务
+		_all.onclick=function(){
+			showTask();
+			flag=undefined;
+		}
+		//点击已完成的任务
+		_task.onclick=function(){
+			showTask(true);
+			flag=true;
+		}
+		//点击未完成的任务
+		_untask.onclick=function(){
+			showTask(false);
+			flag=false;
+		}
+		
+		//点击修改完成状态	利用事件委托完成
+		_taskList.onclick=function(event){
+			//1.从本地存储取数据
+			var taskStr=localStorage.taskList;
+			var taskArr=taskStr==undefined?[]:JSON.parse(taskStr);
+			var target=event.target||event.srcElement;
+			//获取事件对象
+			if(target.nodeName=="INPUT"){
+				//获取复选框的状态
+				var status=target.checked;
+				// 如果复选框被选中则添加删除线
+				if(status){
+					// nextElementSibling：获取弟弟元素节点	给弟弟节点增加一个del
+					target.nextElementSibling.className="del"
+				}else{
+					target.nextElementSibling.className=""
+				}
+				//修改点击的数据对应的状态
+				var nextId=target.value;
+				//根据indexId查询对应的obj
+				var obj=taskArr.find(function(obj){
+					return obj.nextId==nextId;
+				})
+				//改变状态
+				obj.status=status;
+			}else if(target.nodeName=="A"){
+				//获取自定义属性值
+				var index=target.dataset.index;
+				taskArr.splice(index,1);
+			}
+			//更新本地存储
+		localStorage.taskList=JSON.stringify(taskArr);
+			//重新渲染,需要判断当前点击的是哪个查询选项
+			showTask(flag);
+		}
+		
+	</script>
+</html>

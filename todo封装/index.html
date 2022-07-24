@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+    <div class="big">
+        <img src="../../照片/新一.jpeg" alt="">
+        <input type="text" class="iip" id="input" onkeyup="addArray(event)">
+        <button class="addd"> Submit</button>
+        <ul id="ul">
+        </ul>
+        <h4>暂无数据</h4>
+        <p class="pp">数量 <span class="sl"></span></p>
+        <button class="qk" onclick="xzsc()">选中删除</button> <button class="allshow" onclick="allc()">全部显示</button> <button class="yeschoose" onclick="yxz()">已选中 </button><button class="nochoose" onclick="ncc()">为选中</button>
+    </div>
+</body>
+</html>
+<script src="./index.js"></script>
+<script>
+//     var list = []
+//     var ul = document.getElementById('ul')
+//     var ipt = document.getElementById('input')
+//     var addd = document.querySelector('.addd')
+//     var sl = document.querySelector('.sl')
+//     var qk = document.querySelector('.qk')
+//     var yc=document.querySelector('.yeschoose')
+//     var nc=document.querySelector('.nochoose')
+//     var as=document.querySelector('.allshow')
+   
+//     // 全部显示
+//     as.onclick=function(){
+//         var check=document.querySelectorAll('.check')
+//         for (let i = 0; i < check.length; i++) {
+//             check[i].parentNode.style.display='block'
+//         }
+      
+//     }
+
+
+//     // 暂无数据
+//     function zw(){
+//         var li=document.querySelectorAll('li')
+//         if(li.length==0){
+//             var li=document.createElement('li')
+//             li.innerHTML=`
+//             <li>暂无数据</li>
+//             `
+//         }
+//     }
+//     //已选中
+//     yc.onclick=function(){
+//         var check=document.querySelectorAll('.check')
+//         for (let i = 0; i < check.length; i++) {
+//             if(check[i].getAttribute('index')==1){
+//                 check[i].parentNode.style.display='none'
+//             }else{
+//                 check[i].parentNode.style.display='block'
+//             }
+//         }
+//         number()
+//     }
+//     //未选中
+//     nc.onclick=function(){
+//         var check=document.querySelectorAll('.check')
+//         for (let i = 0; i < check.length; i++) {
+//            if(check[i].getAttribute('index')==2){
+//             check[i].parentNode.style.display='none'
+//            }else{
+//             check[i].parentNode.style.display='block'
+//            }
+//         }
+//         number()
+//     }
+//     //选中删除
+//     var ssc = function () {
+//         var check = document.querySelectorAll('.check')
+//         for (let i = 0; i < check.length; i++) {
+//             if (check[i].getAttribute('index') == 2) {
+//                 ul.removeChild(check[i].parentNode)
+//             }
+
+//         }
+//     }   
+//     //选中删除 
+//     qk.onclick = function () {
+//         ssc()
+//         var li = document.querySelectorAll('li')
+//         sl.innerHTML = li.length
+//     }
+//     //总数量
+//     var number = function () {
+//         var num = 0
+//         var li = document.querySelectorAll('li')
+//         for (let i = 0; i < li.length; i++) {
+//             num++
+//         }
+//         sl.innerHTML = num
+//     }
+//     //添加
+//     function add() {
+//         if (ipt.value == '') {
+//             alert('不能为空')
+//             return
+//         }
+//         list.push(ipt.value)
+//         ipt.value = ''
+//         var li = document.createElement('li')
+//         for (let i = 0; i < list.length; i++) {
+//             li.innerHTML = `
+//            <input type="checkbox" index="1" class="check">
+//            <span>${list[i]}</span>
+//            <button class="sc" >删除</button>
+//            `
+//         }
+//         ul.appendChild(li)
+//         //点击单选
+//         var check = document.querySelectorAll('.check')
+//         for (let i = 0; i < check.length; i++) {
+//             check[i].onclick = function () {
+//                 if (check[i].getAttribute('index') == 1) {
+//                     this.setAttribute('index', 2)
+//                     this.parentNode.style.backgroundColor = 'yellow'
+//                     this.parentNode.style.color = 'red'
+//                 } else {
+//                     this.setAttribute('index', 1)
+//                     this.parentNode.style.backgroundColor = ''
+//                     this.parentNode.style.color = '#000'
+//                 }
+//                 var deg = 0
+//                 var des = setInterval(() => {
+//                     deg += 20
+//                     this.parentNode.style.transform = 'rotateX(' + deg + 'deg)'
+//                     if (deg >= 360) {
+//                         clearTimeout(des)
+//                     }
+//                 }, 20)
+//             }
+//         }
+//         //删除
+//         var sc = document.querySelectorAll('.sc')
+//         for (let i = 0; i < sc.length; i++) {
+//             sc[i].onclick = function () {
+//                 ul.removeChild(this.parentNode)
+//                 // 删除完调用数量总数
+//                 number()
+//             }
+//         }
+//         // 添加完调用数量总数
+//         number()
+//     }
+// //点击添加
+//     addd.addEventListener('click', function () {
+//         add()
+//     })
+// //按键添加
+//     ipt.addEventListener('keyup', function (e) {
+//         if (e.keyCode == 13) {
+//             add()
+//         }
+//     })
+</script>
+<style>
+    .pp {
+        margin-left: 20px;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        background: -webkit-linear-gradient(left, pink, hotpink);
+    }
+
+    .big {
+        border-top-left-radius: 10%;
+        border-top-right-radius: 10%;
+        border-bottom-left-radius: 10%;
+        border-bottom-right-radius: 10%;
+        width: 350px;
+        height: 400px;
+        background-color: white;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    img {
+        width: 200px;
+        margin-left: 22%;
+        border-top-left-radius: 10%;
+        border-top-right-radius: 10%;
+        border-bottom-left-radius: 10%;
+        border-bottom-right-radius: 10%;
+    }
+    .iip {
+        width: 65%;
+        border: 0;
+        border-bottom: 3px dashed orangered;
+        margin-left: 7%;
+        height: 30px;
+    }
+    del {
+        border: 0;
+        padding: 10px 10px;
+        border: 1px solid #ccc;
+    }
+    ul {
+        list-style: none;
+    }
+    h4{
+        text-align: center;
+    }
+    .xz{
+        background-color: red;
+    }
+</style>
