@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <ul>
+        </ul>
+        <button onclick="one()">抽人 one</button>
+        <button onclick="two()">抽人 two</button>
+</body>
+</html>
+<script>
+    let ss=[
+    '11',
+    '22',
+    '33',
+    '44',
+    '55',
+    '66',
+    '77',
+    '88',
+    '99',
+    '10',
+    '三个',
+    '四个',
+    '五个',
+    '六个',
+    '七个',
+    '八个',
+]
+function xr(){
+    for (let i = 0; i < ss.length; i++) {
+      let li=document.createElement('li')
+      let ul=document.querySelector('ul')
+      li.innerHTML=ss[i]
+      ul.appendChild(li)
+}
+}
+
+xr()
+function two(){
+    let li=document.querySelectorAll('li')
+    for (let i = 0; i < li.length; i++) {
+      li[i].style.backgroundColor=''
+    }
+    let sjs=Math.floor(Math.random()*(ss.length-0+0))+0
+    let sjs1=Math.floor(Math.random()*(ss.length-0+0))+0
+    console.log(sjs);
+    console.log(sjs1);
+    li[sjs].style.backgroundColor='red'
+    li[sjs1].style.backgroundColor='red'
+}
+function one(){
+    let li=document.querySelectorAll('li')
+    for (let i = 0; i < li.length; i++) {
+      li[i].style.backgroundColor=''
+        
+    }
+   
+    let sjs=Math.floor(Math.random()*(ss.length-0+0))+0
+    console.log(sjs);
+  
+    li[sjs].style.backgroundColor='red'
+}
+
+</script>
+<style>
+    ul{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    li{
+        width: 20%;
+        margin: 10px 20px;
+        padding: 10px 10px;
+        border: 1px solid #ccc;
+        list-style: none;
+        text-align: center;
+    }
+</style>
