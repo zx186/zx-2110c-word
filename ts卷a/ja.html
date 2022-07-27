@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" onkeydown="ss(event)" class="ipt">
+    <table>
+        <thead>
+            <th >编号 <img src="./arrow-red.png" class="imm" onclick="idd()" alt=""></th>
+            <th>名称</th>
+            <th>价格 <img src="./arrow-red.png" onclick="pric()" alt=""></th>
+        </thead>
+        <tbody>
+           <tr>
+           </tr>
+        </tbody>
+    </table>
+
+    <input type="text" onblur="blur()" class="sj">
+</body>
+</html>
+<script src="./ja.js"></script>
+<style>
+    th{
+        /* padding: 10px 50px; */
+        border: 1px solid #ccc;
+    }
+    tr{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .name{
+        /* padding: 10px 60px; */
+        padding-left: 30px;
+        
+    }
+    .price{
+        padding-left: 100px;
+    }
+    li{
+        list-style: none;
+    }
+    .ys{
+        transform: rotateX(180deg);
+    }
+    .sj{
+        
+    }
+</style>
